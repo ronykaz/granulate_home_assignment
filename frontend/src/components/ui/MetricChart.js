@@ -12,6 +12,8 @@ import {
   Legend,
 } from "recharts";
 
+import ErrorMessege from "./ErrorMessage";
+
 const POLL_INTERVAL = 3000;
 
 const QUERY_METRICS = gql`
@@ -34,12 +36,15 @@ function formalizeMetrics(metricsData) {
 }
 
 export function MetricChart() {
-  const { data, loading } = useQuery(QUERY_METRICS, {
+  const { data, loading, error } = useQuery(QUERY_METRICS, {
     pollInterval: POLL_INTERVAL,
   });
   const metricHistory = useRef([]);
 
   if (loading) return <p>Loading...</p>;
+  if (error) {
+    return <ErrorMessege message={error.message} />;
+  }
   let formalizedMetrics = formalizeMetrics(data.metrics);
   metricHistory.current = metricHistory.current.concat(formalizedMetrics);
 
