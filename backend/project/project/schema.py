@@ -1,14 +1,18 @@
 import graphene
+import graphql_jwt
 
-from metrics.graph_types import MetricData
-from metrics.metrics_provider import get_metrics
-
-
-class Query(graphene.ObjectType):
-    metrics = graphene.List(MetricData)
-
-    def resolve_metrics(self, info):
-        return get_metrics()
+import metrics.schema
+import users.schema
 
 
-schema = graphene.Schema(query=Query)
+class Query(metrics.schema.Query, graphene.ObjectType):
+    pass
+
+
+class Mutation(users.schema.Mutation, graphene.ObjectType):
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

@@ -53,6 +53,11 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
+AUTHENTICATION_BACKENDS = [
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
 ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
@@ -117,7 +122,10 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-GRAPHENE = {"SCHEMA": "project.schema.schema"}
+GRAPHENE = {
+    "SCHEMA": "project.schema.schema",
+    "MIDDLEWARE": ["graphql_jwt.middleware.JSONWebTokenMiddleware",],
+}
 
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://127.0.0.1:3000"]
 

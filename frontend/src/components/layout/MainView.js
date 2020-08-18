@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MetricChart } from "../ui/Metrics";
+import { MetricChart } from "../ui/MetricChart";
 
 export function MainView() {
   return (

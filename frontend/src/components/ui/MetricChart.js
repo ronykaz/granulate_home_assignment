@@ -45,7 +45,7 @@ export function MetricChart() {
 
   return (
     <LineChart
-      width={500}
+      width={800}
       height={300}
       data={metricHistory.current}
       margin={{
