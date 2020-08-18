@@ -1,4 +1,6 @@
 import React from "react";
+import { useRef } from "react";
+
 import { useQuery, gql } from "@apollo/client";
 import {
   LineChart,
@@ -10,6 +12,8 @@ import {
   Legend,
 } from "recharts";
 
+const POLL_INTERVAL = 3000;
+
 const QUERY_METRICS = gql`
   query {
     metrics {
@@ -19,25 +23,29 @@ const QUERY_METRICS = gql`
   }
 `;
 
-export function MetricChart() {
-  const { data, loading } = useQuery(QUERY_METRICS, {
-    pollInterval: 1000,
-  });
-  if (loading) return <p>Loading...</p>;
-
-  let dataChart = data.metrics.map(({ value, time }) => {
+function formalizeMetrics(metricsData) {
+  return metricsData.map(({ value, time }) => {
     let dict = {
       value,
       time: time.slice(0, time.lastIndexOf(".")),
     };
     return dict;
   });
+}
 
+export function MetricChart() {
+  const { data, loading } = useQuery(QUERY_METRICS, {
+    pollInterval: POLL_INTERVAL,
+  });
+  const metricHistory = useRef([]);
+  if (loading) return <p>Loading...</p>;
+  let formalizedMetrics = formalizeMetrics(data.metrics);
+  metricHistory.current = metricHistory.current.concat(formalizedMetrics);
   return (
     <LineChart
       width={500}
       height={300}
-      data={dataChart}
+      data={metricHistory.current}
       margin={{
         top: 5,
         right: 30,
