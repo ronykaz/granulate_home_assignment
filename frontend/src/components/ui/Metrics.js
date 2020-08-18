@@ -38,9 +38,11 @@ export function MetricChart() {
     pollInterval: POLL_INTERVAL,
   });
   const metricHistory = useRef([]);
+
   if (loading) return <p>Loading...</p>;
   let formalizedMetrics = formalizeMetrics(data.metrics);
   metricHistory.current = metricHistory.current.concat(formalizedMetrics);
+
   return (
     <LineChart
       width={500}

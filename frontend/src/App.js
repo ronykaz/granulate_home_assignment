@@ -1,7 +1,9 @@
 import React from "react";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client";
-import { MetricChart } from "./components/Metrics";
+
+import { Header } from "./components/layout/Header";
+import { MainView } from "./components/layout/MainView";
 
 const client = new ApolloClient({
   uri: "http://localhost:8000/graphql/",
@@ -10,7 +12,8 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <MetricChart />
+    <Header />
+    <MainView />
   </ApolloProvider>
 );
 
