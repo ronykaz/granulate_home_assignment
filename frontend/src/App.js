@@ -7,14 +7,12 @@ import { MainView } from "./components/layout/MainView";
 
 const link = createHttpLink({
   uri: "http://localhost:8000/graphql/",
+  credentials: "include",
 });
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link,
-  fetchOptions: {
-    credentials: "include",
-  },
 });
 
 const App = () => (

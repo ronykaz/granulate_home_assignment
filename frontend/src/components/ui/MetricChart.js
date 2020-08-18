@@ -14,7 +14,7 @@ import {
 
 import ErrorMessege from "./ErrorMessage";
 
-const POLL_INTERVAL = 3000;
+const POLL_INTERVAL = 1000;
 
 const QUERY_METRICS = gql`
   query {
