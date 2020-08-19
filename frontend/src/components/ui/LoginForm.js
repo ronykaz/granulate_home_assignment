@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import InputForm from "./InputForm";
 import Button from "./Button";
-import ErrorMessege from "./ErrorMessage";
+import ErrorMessage from "./ErrorMessage";
 
 export function LoginForm({ handleSignIn, loading, error }) {
   const [username, setUsername] = useState("");
@@ -37,7 +37,7 @@ export function LoginForm({ handleSignIn, loading, error }) {
           {loading ? "Loading..." : "Sign In"}
         </Button>
       </div>
-      {error && <ErrorMessege message={error.message} />}
+      {error && <ErrorMessage message={error.message} />}
     </div>
   );
 }
