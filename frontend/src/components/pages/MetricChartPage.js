@@ -2,8 +2,8 @@ import React from "react";
 import { useRef } from "react";
 
 import { useQuery, gql } from "@apollo/client";
-import ErrorMessege from "./ErrorMessage";
-import MetricChart from "./MetricChart";
+import ErrorMessege from "../ui/ErrorMessage";
+import MetricChart from "../ui/MetricChart";
 
 const POLL_INTERVAL = 1000;
 

@@ -1,6 +1,13 @@
 import React from "react";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { ApolloProvider, createHttpLink } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+
+import { resolvers, typeDefs } from "./apolo/resolvers";
+import { INITIAL_STATE } from "./apolo/queries";
 
 import { Header } from "./components/layout/Header";
 import { MainView } from "./components/layout/MainView";
@@ -13,7 +20,11 @@ const link = createHttpLink({
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link,
+  typeDefs,
+  resolvers,
 });
+
+client.writeQuery(INITIAL_STATE);
 
 const App = () => (
   <ApolloProvider client={client}>

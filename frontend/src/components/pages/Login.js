@@ -1,6 +1,7 @@
 import React from "react";
-import { gql, useMutation } from "@apollo/client";
-import LoginForm from "./LoginForm";
+import { gql, useMutation, useApolloClient } from "@apollo/client";
+import LoginForm from "../ui/LoginForm";
+import { UPDATE_LOGGED_IN } from "../../apolo/queries";
 
 const SIGN_IN = gql`
   mutation Login($username: String!, $password: String!) {
@@ -11,10 +12,15 @@ const SIGN_IN = gql`
 `;
 
 export function Login() {
+  const client = useApolloClient();
   const [signIn, { data, loading, error }] = useMutation(SIGN_IN, {
     errorPolicy: "all",
   });
-  if (data) console.log(data);
+  if (data) {
+    if (data.tokenAuth != null) {
+      client.writeQuery(UPDATE_LOGGED_IN);
+    }
+  }
 
   function handleSignIn(username, password) {
     signIn({ variables: { username: username, password: password } });

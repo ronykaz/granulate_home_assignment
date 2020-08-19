@@ -1,23 +1,27 @@
 import React from "react";
-import Button from "../ui/Button";
+import { useQuery, useApolloClient } from "@apollo/client";
+import { IS_LOGGED_IN, UPDATE_LOGGED_OUT } from "../../apolo/queries";
+import LogoutButton from "../ui/LogoutButton";
 
 export function Header() {
+  const { data } = useQuery(IS_LOGGED_IN);
+  const client = useApolloClient();
+
+  function handleLogOut() {
+    client.writeQuery(UPDATE_LOGGED_OUT);
+  }
+
   return (
     <div className="flex">
       <div className="w-full bg-gray-500 h-14">
         <div className="float-left text-white text-3xl tracking-wider pl-2">
           GranDash
         </div>
-        <div className="float-right m-1">
-          <Button
-            bgColor="blue-500"
-            hoverColor="blue-700"
-            textColor="white"
-            handleClick={() => alert(1)}
-          >
-            Logout
-          </Button>
-        </div>
+        {data.isLoggedIn ? (
+          <LogoutButton handleLogOut={handleLogOut} />
+        ) : (
+          <span />
+        )}
       </div>
     </div>
   );
