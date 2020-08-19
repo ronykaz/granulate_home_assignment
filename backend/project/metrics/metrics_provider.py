@@ -5,7 +5,7 @@ METRIC_INTERVAL_MILISECONDS = 250
 
 
 def get_metrics():
-    current_time = datetime.datetime.now()
+    current_time = datetime.datetime.utcnow()
     metric_results = []
     metric_ammount = 1000 // METRIC_INTERVAL_MILISECONDS
     for i in range(metric_ammount):
